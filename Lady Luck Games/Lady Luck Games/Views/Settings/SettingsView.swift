@@ -1,4 +1,3 @@
-
 import SwiftUI
 import StoreKit
 
@@ -13,139 +12,150 @@ struct SettingsView: View {
                 VStack(spacing: 0)  {
                     Spacer()
                     ZStack {
-                        
-                        VStack(spacing: 8) {
+                        HStack(spacing: 0) {
                             
-                            VStack(spacing: 15)  {
+                            VStack {
+                                Spacer()
+                                Image(.lady1Position)
+                                    .resizable()
+                                    .scaledToFit()
+                            }.ignoresSafeArea(edges: [.horizontal, .bottom])
+                            
+                            VStack(spacing: 15) {
                                 
-                                Text("Music")
-                                    .font(.custom(Fonts.bold.rawValue, size: DeviceInfo.shared.deviceType == .pad ? 48:24))
-                                    .textCase(.uppercase)
-                                    .foregroundStyle(.yellow)
-                                HStack(spacing: 20) {
-                                    Text("Off")
-                                        .font(.custom(Fonts.bold.rawValue, size: DeviceInfo.shared.deviceType == .pad ? 48:24))
+                                VStack(spacing: 15)  {
+                                    
+                                    Text("Music")
+                                        .font(.custom(Fonts.bold.rawValue, size: DeviceInfo.shared.deviceType == .pad ? 64:32))
                                         .textCase(.uppercase)
                                         .foregroundStyle(.yellow)
-                                    Button {
-                                        withAnimation {
-                                            settings.musicEnabled.toggle()
+                                    HStack(spacing: 20) {
+                                        Text("Off")
+                                            .font(.custom(Fonts.bold.rawValue, size: DeviceInfo.shared.deviceType == .pad ? 48:24))
+                                            .textCase(.uppercase)
+                                            .foregroundStyle(.yellow)
+                                        Button {
+                                            withAnimation {
+                                                settings.musicEnabled.toggle()
+                                            }
+                                        } label: {
+                                            if settings.musicEnabled {
+                                                Image(.onLLG)
+                                                    .resizable()
+                                                    .scaledToFit()
+                                                    .frame(height: DeviceInfo.shared.deviceType == .pad ? 68:34)
+                                            } else {
+                                                Image(.offLLG)
+                                                    .resizable()
+                                                    .scaledToFit()
+                                                    .frame(height: DeviceInfo.shared.deviceType == .pad ? 68:34)
+                                            }
                                         }
-                                    } label: {
-                                        if settings.musicEnabled {
-                                            Image(.onCPG)
-                                                .resizable()
-                                                .scaledToFit()
-                                                .frame(height: DeviceInfo.shared.deviceType == .pad ? 68:34)
-                                        } else {
-                                            Image(.offCPG)
-                                                .resizable()
-                                                .scaledToFit()
-                                                .frame(height: DeviceInfo.shared.deviceType == .pad ? 68:34)
-                                        }
+                                        
+                                        Text("On")
+                                            .font(.custom(Fonts.bold.rawValue, size: DeviceInfo.shared.deviceType == .pad ? 48:24))
+                                            .textCase(.uppercase)
+                                            .foregroundStyle(.yellow)
                                     }
                                     
-                                    Text("On")
-                                        .font(.custom(Fonts.bold.rawValue, size: DeviceInfo.shared.deviceType == .pad ? 48:24))
-                                        .textCase(.uppercase)
-                                        .foregroundStyle(.yellow)
                                 }
                                 
-                            }
-                            
-                            VStack(spacing: DeviceInfo.shared.deviceType == .pad ? 30:15)  {
-                                
-                                Text("Vibration")
-                                    .font(.custom(Fonts.bold.rawValue, size: DeviceInfo.shared.deviceType == .pad ? 48 :24))
-                                    .textCase(.uppercase)
-                                    .foregroundStyle(.yellow)
-                                
-                                HStack(spacing: 20) {
-                                    Text("Off")
-                                        .font(.custom(Fonts.bold.rawValue, size: DeviceInfo.shared.deviceType == .pad ? 48:24))
-                                        .textCase(.uppercase)
-                                        .foregroundStyle(.yellow)
-                                    Button {
-                                        withAnimation {
-                                            settings.soundEnabled.toggle()
-                                        }
-                                    } label: {
-                                        if settings.soundEnabled {
-                                            Image(.onCPG)
-                                                .resizable()
-                                                .scaledToFit()
-                                                .frame(height: DeviceInfo.shared.deviceType == .pad ? 68:34)
-                                        } else {
-                                            Image(.offCPG)
-                                                .resizable()
-                                                .scaledToFit()
-                                                .frame(height: DeviceInfo.shared.deviceType == .pad ? 68:34)
-                                        }
-                                    }
+                                VStack(spacing: DeviceInfo.shared.deviceType == .pad ? 30:15)  {
                                     
-                                    Text("on")
-                                        .font(.custom(Fonts.bold.rawValue, size: DeviceInfo.shared.deviceType == .pad ? 48:24))
+                                    Text("Vibration")
+                                        .font(.custom(Fonts.bold.rawValue, size: DeviceInfo.shared.deviceType == .pad ? 64 :32))
                                         .textCase(.uppercase)
                                         .foregroundStyle(.yellow)
+                                    
+                                    HStack(spacing: 20) {
+                                        Text("Off")
+                                            .font(.custom(Fonts.bold.rawValue, size: DeviceInfo.shared.deviceType == .pad ? 48:24))
+                                            .textCase(.uppercase)
+                                            .foregroundStyle(.yellow)
+                                        Button {
+                                            withAnimation {
+                                                settings.soundEnabled.toggle()
+                                            }
+                                        } label: {
+                                            if settings.soundEnabled {
+                                                Image(.onLLG)
+                                                    .resizable()
+                                                    .scaledToFit()
+                                                    .frame(height: DeviceInfo.shared.deviceType == .pad ? 68:34)
+                                            } else {
+                                                Image(.offLLG)
+                                                    .resizable()
+                                                    .scaledToFit()
+                                                    .frame(height: DeviceInfo.shared.deviceType == .pad ? 68:34)
+                                            }
+                                        }
+                                        
+                                        Text("on")
+                                            .font(.custom(Fonts.bold.rawValue, size: DeviceInfo.shared.deviceType == .pad ? 48:24))
+                                            .textCase(.uppercase)
+                                            .foregroundStyle(.yellow)
+                                    }
                                 }
-                            }
                                 Button {
                                     rateUs()
                                 } label: {
                                     
                                     Text("RATE US")
-                                        .font(.custom(Fonts.bold.rawValue, size: DeviceInfo.shared.deviceType == .pad ? 40:20))
+                                        .font(.custom(Fonts.regular.rawValue, size: DeviceInfo.shared.deviceType == .pad ? 40:20))
                                         .foregroundStyle(.yellow)
                                         .textCase(.uppercase)
-                                        .padding(.vertical)
-                                        .frame(width: DeviceInfo.shared.deviceType == .pad ? 268:134)
+                                        .padding(.vertical, 8)
+                                        .padding(.horizontal, 40)
                                         .background(
-                                            Color.mainGreen
+                                            Color.loaderBg
                                         )
-                                        .cornerRadius(10)
+                                        .cornerRadius(20)
                                         .overlay(
-                                            RoundedRectangle(cornerRadius: 10)
+                                            RoundedRectangle(cornerRadius: 20)
                                                 .stroke(Color.yellow, lineWidth: 1)
                                         )
                                 }
-                            
-                        }.padding(DeviceInfo.shared.deviceType == .pad ? 40:20)
-                            .padding(.horizontal, DeviceInfo.shared.deviceType == .pad ? 40:20)
-                        .background(
-                            LinearGradient(
-                                gradient: Gradient(colors: [
-                                    Color(red: 83/255, green: 11/255, blue: 11/255),
-                                    Color(red: 137/255, green: 20/255, blue: 10/255),
-                                    Color(red: 83/255, green: 11/255, blue: 11/255)
-                                ]),
-                                startPoint: .leading,
-                                endPoint: .trailing
-                            )
-                        )
-                        .cornerRadius(10)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 10)
-                                .stroke(Color.yellow, lineWidth: 1)
-                        )
-                    }.frame(height: geometry.size.height * 0.87)
+                                
+                            }.padding(DeviceInfo.shared.deviceType == .pad ? 40:20)
+                                .padding(.horizontal, DeviceInfo.shared.deviceType == .pad ? 40:20)
+                                .frame(width: DeviceInfo.shared.deviceType == .pad ?600:300)
+                                .background(
+                                    LinearGradient(
+                                        gradient: Gradient(colors: [
+                                            Color(red: 83/255, green: 11/255, blue: 11/255),
+                                            Color(red: 137/255, green: 20/255, blue: 10/255),
+                                            Color(red: 83/255, green: 11/255, blue: 11/255)
+                                        ]),
+                                        startPoint: .leading,
+                                        endPoint: .trailing
+                                    )
+                                )
+                                .cornerRadius(10)
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 10)
+                                        .stroke(Color.yellow, lineWidth: 1)
+                                )
+                            VStack {
+                                Spacer()
+                                Image(.lady1Position)
+                                    .resizable()
+                                    .scaledToFit()
+                            }.ignoresSafeArea(edges: [.horizontal, .bottom]).opacity(0)
+                        }.frame(height: geometry.size.height * 0.87)
+                        
+                    }
                     
-                    Spacer()
                 }
                 
                 VStack {
                     ZStack {
-                        HStack {
-                            Text("Settings")
-                                .font(.custom(Fonts.bold.rawValue, size: DeviceInfo.shared.deviceType == .pad ? 80:40))
-                                .textCase(.uppercase)
-                                .foregroundStyle(.yellow)
-                        }
+                        
                         HStack {
                             Button {
                                 presentationMode.wrappedValue.dismiss()
                             } label: {
                                 ZStack {
-                                    Image(.backIcon)
+                                    Image(.backLLG)
                                         .resizable()
                                         .scaledToFit()
                                     
@@ -153,23 +163,16 @@ struct SettingsView: View {
                                 
                             }
                             Spacer()
-                            
-                            CoinsBg(coins: "100")
                         }.padding([.leading, .top])
                     }
                     Spacer()
                 }
                 
             }.background(
-                LinearGradient(
-                    gradient: Gradient(colors: [
-                        Color(red: 83/255, green: 11/255, blue: 11/255),
-                        Color(red: 137/255, green: 20/255, blue: 10/255),
-                        Color(red: 83/255, green: 11/255, blue: 11/255)
-                    ]),
-                    startPoint: .leading,
-                    endPoint: .trailing
-                )
+                Image(.bg)
+                    .resizable()
+                    .ignoresSafeArea()
+                    .scaledToFill()
                 
             )
         }
