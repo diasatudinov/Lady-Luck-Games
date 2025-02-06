@@ -1,3 +1,5 @@
+import SwiftUI
+
 class GameViewModel: ObservableObject {
     @Published var blocks: [Block] = []
     @Published var gameOver: Bool = false
