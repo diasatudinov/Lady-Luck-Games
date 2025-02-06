@@ -6,18 +6,18 @@ struct TextBg: View {
     var body: some View {
         ZStack {
             Text(text)
-                .font(.custom(Fonts.bold.rawValue, size: textSize))
-                .foregroundStyle(.yellow)
+                .font(.custom(Fonts.regular.rawValue, size: textSize))
+                .foregroundStyle(.mainYellow)
                 .textCase(.uppercase)
                 .padding(.vertical)
                 .frame(width: DeviceInfo.shared.deviceType == .pad ? 500:248)
                 .background(
-                    Color.mainGreen
+                    Color.mainRed
                 )
-                .cornerRadius(10)
+                .cornerRadius(20)
                 .overlay(
-                    RoundedRectangle(cornerRadius: 10)
-                        .stroke(Color.yellow, lineWidth: DeviceInfo.shared.deviceType == .pad ? 2:1)
+                    RoundedRectangle(cornerRadius: 20)
+                        .stroke(Color.mainYellow, lineWidth: DeviceInfo.shared.deviceType == .pad ? 2:1)
                 )
         }
     }

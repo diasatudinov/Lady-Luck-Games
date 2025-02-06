@@ -1,10 +1,3 @@
-//
-//  ContentView.swift
-//  Lady Luck Games
-//
-//  Created by Dias Atudinov on 06.02.2025.
-//
-
 import SwiftUI
 
 struct ContentView: View {
