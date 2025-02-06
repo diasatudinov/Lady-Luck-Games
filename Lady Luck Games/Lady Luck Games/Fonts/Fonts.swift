@@ -1,5 +1,6 @@
 import Foundation
 
 enum Fonts: String {
-    case abhayaLibre = "AbhayaLibre-ExtraBold"
+    case regular = "Lora-Regular"
+    case bold = "Lora-Bold"
 }
