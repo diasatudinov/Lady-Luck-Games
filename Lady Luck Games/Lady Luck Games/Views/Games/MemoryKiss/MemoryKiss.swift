@@ -1,10 +1,3 @@
-//
-//  MemoryKiss.swift
-//  Lady Luck Games
-//
-//  Created by Dias Atudinov on 06.02.2025.
-//
-
 import SwiftUI
 
 struct MemoryKiss: View {
@@ -15,48 +8,31 @@ struct MemoryKiss: View {
     @State private var message: String = "Find all matching cards!"
     @State private var gameEnded: Bool = false
     @State private var pauseShow: Bool = false
-    private let cardTypes = ["cardFace1", "cardFace2", "cardFace3", "cardFace4", "cardFace5", "cardFace6"]
-    private let gridSize = 5
+    private let cardTypes = ["card1", "card2", "card3", "card4", "card5", "card6", "card7", "card8"]
+    private let gridSize = 4
     
     @State private var counter: Int = 0
     
     @Environment(\.presentationMode) var presentationMode
     var body: some View {
         ZStack {
-            
-            
+            HStack {
                 VStack {
-                    ZStack {
-                        HStack {
-                            Button {
-                                pauseShow = true
-                            } label: {
-                                ZStack {
-                                    Image(.coinBg)
-                                        .resizable()
-                                        .scaledToFit()
-                                    
-                                    Image(.pause)
-                                        .resizable()
-                                        .scaledToFit()
-                                        .frame(height: DeviceInfo.shared.deviceType == .pad ? 40:20)
-                                    
-                                }.frame(height: DeviceInfo.shared.deviceType == .pad ? 100:55)
-                                
-                            }
-                            Spacer()
-                        }
-                    }.padding([.top,.horizontal], 20)
-                    if DeviceInfo.shared.deviceType == .pad {
-                        Spacer()
-                    }
-                    LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: gridSize), spacing: 0) {
+                    Spacer()
+                    Image(.lady1Position)
+                        .resizable()
+                        .scaledToFit()
+                        .opacity(0)
+                }
+                VStack {
+                    
+                    LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: gridSize), spacing: 10) {
                         ForEach(cards) { card in
                             CardView(card: card)
                                 .onTapGesture {
                                     flipCard(card)
                                     if settingsVM.soundEnabled {
-                                        playSound(named: "flipcard")
+                                        // playSound(named: "flipcard")
                                     }
                                 }
                                 .opacity(card.isMatched ? 0.5 : 1.0)
@@ -64,31 +40,182 @@ struct MemoryKiss: View {
                         
                     }
                     .frame(width: DeviceInfo.shared.deviceType == .pad ? 900:460)
-                    if DeviceInfo.shared.deviceType == .pad {
-                        Spacer()
-                    }
+                    
                 }
+                .padding(14)
+                .background(
+                    Color.mainRed
+                )
+                .cornerRadius(10)
                 .onAppear {
                     setupGame()
                 }
+                
+                VStack {
+                    Spacer()
+                    Image(.lady2Position)
+                        .resizable()
+                        .scaledToFit()
+                        .opacity(gameEnded ? 0:1)
+                }
+            }.ignoresSafeArea(edges: [.bottom, .trailing, .leading])
             
+            VStack {
+                HStack {
+                    Button {
+                        pauseShow = true
+                    } label: {
+                        ZStack {
+                            Image(.pause)
+                                .resizable()
+                                .scaledToFit()
+                            
+                        }.frame(height: DeviceInfo.shared.deviceType == .pad ? 100:50)
+                        
+                    }
+                    Spacer()
+                }
+                Spacer()
+            }.padding()
             
             if pauseShow {
-                MenuShield(menuType: .pause, headerText: "Pause", firstBtnText: "Resume", secondBtnText: "Menu", menuShow: $pauseShow, firstBtnPress: { pauseShow = false }, secondBtnPress: { presentationMode.wrappedValue.dismiss() })
+                ZStack{
+                    Color.black.opacity(0.5).ignoresSafeArea()
+                    VStack {
+                        
+                        Text("Pause")
+                            .font(.custom(Fonts.regular.rawValue, size: DeviceInfo.shared.deviceType == .pad ? 72:36))
+                            .foregroundStyle(.yellow)
+                            .textCase(.uppercase)
+                        
+                        Button {
+                            pauseShow = false
+                        } label: {
+                            Text("Resume")
+                                .font(.custom(Fonts.regular.rawValue, size: DeviceInfo.shared.deviceType == .pad ? 64:32))
+                                .foregroundStyle(.yellow)
+                                .textCase(.uppercase)
+                                .padding(.vertical, 14)
+                                .padding(.horizontal, 80)
+                                .background(
+                                    Color.mainRed
+                                )
+                                .cornerRadius(20)
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 20)
+                                        .stroke(Color.yellow, lineWidth: 1)
+                                )
+                        }
+                        
+                        Button {
+                            presentationMode.wrappedValue.dismiss()
+                        } label: {
+                            Text("  Menu  ")
+                                .font(.custom(Fonts.regular.rawValue, size: DeviceInfo.shared.deviceType == .pad ? 64:32))
+                                .foregroundStyle(.yellow)
+                                .textCase(.uppercase)
+                                .padding(.vertical, 14)
+                                .padding(.horizontal, 80)
+                                .background(
+                                    Color.mainRed
+                                )
+                                .cornerRadius(20)
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 20)
+                                        .stroke(Color.yellow, lineWidth: 1)
+                                )
+                        }
+                    }
+                    .padding(20)
+                    .background(
+                        Color.loaderBg
+                    )
+                    .cornerRadius(20)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 20)
+                            .stroke(Color.yellow, lineWidth: 1)
+                    )
+                }
+                
             }
             
             if gameEnded {
                 
-                MenuShield(menuType: .win, headerText: "You Win!", firstBtnText: "Next Level", secondBtnText: "Menu", menuShow: $gameEnded, firstBtnPress: { setupGame() }, secondBtnPress: { presentationMode.wrappedValue.dismiss() }, addPoints: "+5")
-            
+                
+                ZStack{
+                    Color.black.opacity(0.5).ignoresSafeArea()
+                    
+                    if counter < 2 {
+                        VStack(spacing: 0) {
+                            Spacer()
+                            Text("Congratulations!")
+                                .font(.custom(Fonts.regular.rawValue, size: DeviceInfo.shared.deviceType == .pad ? 96:48))
+                                .foregroundStyle(.yellow)
+                                .textCase(.uppercase)
+                            Image(.lady1Position)
+                                .resizable()
+                                .scaledToFit()
+                                .frame(height: DeviceInfo.shared.deviceType == .pad ? 640:320)
+                        }.ignoresSafeArea()
+                    } else {
+                        VStack {
+                            Button {
+                                setupGame()
+                            } label: {
+                                Text("Retry ")
+                                    .font(.custom(Fonts.regular.rawValue, size: DeviceInfo.shared.deviceType == .pad ? 64:32))
+                                    .foregroundStyle(.yellow)
+                                    .textCase(.uppercase)
+                                    .padding(.vertical, 14)
+                                    .padding(.horizontal, 80)
+                                    .background(
+                                        Color.mainRed
+                                    )
+                                    .cornerRadius(20)
+                                    .overlay(
+                                        RoundedRectangle(cornerRadius: 20)
+                                            .stroke(Color.yellow, lineWidth: 1)
+                                    )
+                            }
+                            
+                            Button {
+                                presentationMode.wrappedValue.dismiss()
+                            } label: {
+                                Text(" Menu")
+                                    .font(.custom(Fonts.regular.rawValue, size: DeviceInfo.shared.deviceType == .pad ? 64:32))
+                                    .foregroundStyle(.yellow)
+                                    .textCase(.uppercase)
+                                    .padding(.vertical, 14)
+                                    .padding(.horizontal, 80)
+                                    .background(
+                                        Color.mainRed
+                                    )
+                                    .cornerRadius(20)
+                                    .overlay(
+                                        RoundedRectangle(cornerRadius: 20)
+                                            .stroke(Color.yellow, lineWidth: 1)
+                                    )
+                            }
+                        }
+                        .padding(20)
+                        .background(
+                            Color.loaderBg
+                        )
+                        .cornerRadius(20)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 20)
+                                .stroke(Color.yellow, lineWidth: 1)
+                        )
+                    }
+                }
+                .onAppear {
+                    startTimer()
+                }
             }
             
         }
-        .onAppear {
-            startTimer()
-        }
         .background(
-            Image(.background)
+            Image(.bg)
                 .resizable()
                 .edgesIgnoringSafeArea(.all)
                 .scaledToFill()
@@ -98,11 +225,13 @@ struct MemoryKiss: View {
         
     }
     private func startTimer() {
-        Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { _ in
-            if counter < 4 {
+        Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
+            if counter < 2 {
                 withAnimation {
                     counter += 1
                 }
+            } else {
+                timer.invalidate()
             }
         }
     }
@@ -120,12 +249,10 @@ struct MemoryKiss: View {
         for type in cardTypes {
             gameCards.append(Card(type: type))
             gameCards.append(Card(type: type))
-            gameCards.append(Card(type: type))
-            gameCards.append(Card(type: type))
         }
         
         // Add 1 semaphore card to make it 25 cards
-        gameCards.append(Card(type: "cardSemaphore"))
+        // gameCards.append(Card(type: "cardSemaphore"))
         
         // Shuffle cards
         gameCards.shuffle()
@@ -138,7 +265,7 @@ struct MemoryKiss: View {
         guard let index = cards.firstIndex(where: { $0.id == card.id }),
               !cards[index].isFaceUp,
               !cards[index].isMatched,
-              selectedCards.count < 4 else { return }
+              selectedCards.count < 2 else { return }
         
         // Flip card
         cards[index].isFaceUp = true
@@ -148,7 +275,7 @@ struct MemoryKiss: View {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                 resetAllCards()
             }
-        } else if selectedCards.count == 4 {
+        } else if selectedCards.count == 2 {
             checkForMatch()
         }
     }
@@ -180,8 +307,7 @@ struct MemoryKiss: View {
             if cards.allSatisfy({ $0.isMatched || $0.type == "cardSemaphore" }) {
                 message = "Game Over! You found all matches!"
                 gameEnded = true
-                user.updateUserCoins(for: 5)
-                user.updateUserLevel()
+                
             }
         }
     }
@@ -197,18 +323,18 @@ struct MemoryKiss: View {
         selectedCards.removeAll()
     }
     
-    func playSound(named soundName: String) {
-        if let url = Bundle.main.url(forResource: soundName, withExtension: "mp3") {
-            do {
-                audioPlayer = try AVAudioPlayer(contentsOf: url)
-                audioPlayer?.play()
-            } catch {
-                print("Error playing sound: \(error.localizedDescription)")
-            }
-        }
-    }
+    //    func playSound(named soundName: String) {
+    //        if let url = Bundle.main.url(forResource: soundName, withExtension: "mp3") {
+    //            do {
+    //                audioPlayer = try AVAudioPlayer(contentsOf: url)
+    //                audioPlayer?.play()
+    //            } catch {
+    //                print("Error playing sound: \(error.localizedDescription)")
+    //            }
+    //        }
+    //    }
 }
 
 #Preview {
-    MemoryKiss()
+    MemoryKiss(settingsVM: SettingsViewModel())
 }

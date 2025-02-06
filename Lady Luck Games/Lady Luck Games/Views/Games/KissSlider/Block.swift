@@ -1,3 +1,6 @@
+
+import SwiftUI
+
 struct Block: Identifiable, Equatable {
     let id = UUID()
     var position: CGPoint
