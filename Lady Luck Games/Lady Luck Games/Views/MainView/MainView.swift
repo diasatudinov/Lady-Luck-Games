@@ -131,6 +131,7 @@ struct MainView: View {
 //                }
 //            }
             .fullScreenCover(isPresented: $showGames) {
+                GamesView(settingsVM: settingsVM)
             }
             .fullScreenCover(isPresented: $showInfo) {
                 InfoView()
