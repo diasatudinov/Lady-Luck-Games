@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "lady2position.png",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
