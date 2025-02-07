@@ -5,7 +5,7 @@ class SongsManager {
     var audioPlayer: AVAudioPlayer?
 
     func playBackgroundMusic() {
-        guard let url = Bundle.main.url(forResource: "backgroundSong", withExtension: "mp3") else { return }
+        guard let url = Bundle.main.url(forResource: "llgSong", withExtension: "mp3") else { return }
 
         do {
             audioPlayer = try AVAudioPlayer(contentsOf: url)
