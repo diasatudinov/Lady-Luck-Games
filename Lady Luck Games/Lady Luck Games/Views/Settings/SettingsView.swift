@@ -21,15 +21,15 @@ struct SettingsView: View {
                                     .scaledToFit()
                             }.ignoresSafeArea(edges: [.horizontal, .bottom])
                             
-                            VStack(spacing: 15) {
+                            VStack(spacing: DeviceInfo.shared.deviceType == .pad ? 30:15) {
                                 
-                                VStack(spacing: 15)  {
+                                VStack(spacing: DeviceInfo.shared.deviceType == .pad ? 30:15)  {
                                     
                                     Text("Music")
                                         .font(.custom(Fonts.bold.rawValue, size: DeviceInfo.shared.deviceType == .pad ? 64:32))
                                         .textCase(.uppercase)
                                         .foregroundStyle(.yellow)
-                                    HStack(spacing: 20) {
+                                    HStack(spacing:DeviceInfo.shared.deviceType == .pad ? 40: 20) {
                                         Text("Off")
                                             .font(.custom(Fonts.bold.rawValue, size: DeviceInfo.shared.deviceType == .pad ? 48:24))
                                             .textCase(.uppercase)
@@ -67,7 +67,7 @@ struct SettingsView: View {
                                         .textCase(.uppercase)
                                         .foregroundStyle(.yellow)
                                     
-                                    HStack(spacing: 20) {
+                                    HStack(spacing: DeviceInfo.shared.deviceType == .pad ? 40:20) {
                                         Text("Off")
                                             .font(.custom(Fonts.bold.rawValue, size: DeviceInfo.shared.deviceType == .pad ? 48:24))
                                             .textCase(.uppercase)
@@ -104,8 +104,8 @@ struct SettingsView: View {
                                         .font(.custom(Fonts.regular.rawValue, size: DeviceInfo.shared.deviceType == .pad ? 40:20))
                                         .foregroundStyle(.yellow)
                                         .textCase(.uppercase)
-                                        .padding(.vertical, 8)
-                                        .padding(.horizontal, 40)
+                                        .padding(.vertical, DeviceInfo.shared.deviceType == .pad ? 16:8)
+                                        .padding(.horizontal, DeviceInfo.shared.deviceType == .pad ? 80:40)
                                         .background(
                                             Color.loaderBg
                                         )
@@ -120,15 +120,7 @@ struct SettingsView: View {
                                 .padding(.horizontal, DeviceInfo.shared.deviceType == .pad ? 40:20)
                                 .frame(width: DeviceInfo.shared.deviceType == .pad ?600:300)
                                 .background(
-                                    LinearGradient(
-                                        gradient: Gradient(colors: [
-                                            Color(red: 83/255, green: 11/255, blue: 11/255),
-                                            Color(red: 137/255, green: 20/255, blue: 10/255),
-                                            Color(red: 83/255, green: 11/255, blue: 11/255)
-                                        ]),
-                                        startPoint: .leading,
-                                        endPoint: .trailing
-                                    )
+                                    Color.mainRed
                                 )
                                 .cornerRadius(10)
                                 .overlay(

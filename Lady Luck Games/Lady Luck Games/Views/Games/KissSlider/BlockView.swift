@@ -14,7 +14,7 @@ struct BlockView: View {
                     .scaledToFit()
                     .frame(height: 24)
             }
-        }.frame(width: block.size.width * cellSize - 10, height: block.size.height * cellSize - 10)
+        }.frame(width: DeviceInfo.shared.deviceType == .pad ? (block.size.width * cellSize - 20):(block.size.width * cellSize - 10), height:  DeviceInfo.shared.deviceType == .pad ? (block.size.height * cellSize - 20) : (block.size.height * cellSize - 10))
             .cornerRadius(5)
             .overlay(
                 RoundedRectangle(cornerRadius: 5)

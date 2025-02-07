@@ -23,26 +23,26 @@ struct MainView: View {
                                 Image(.logo)
                                     .resizable()
                                     .scaledToFit()
-                                    .frame(height: 100)
+                                    .frame(height: DeviceInfo.shared.deviceType == .pad ? 200:100)
                                 
-                                VStack(spacing: 15) {
+                                VStack(spacing: DeviceInfo.shared.deviceType == .pad ? 30:15) {
                                     
                                     Button {
                                         showGames = true
                                     } label: {
-                                        TextBg(text: "Games", textSize: DeviceInfo.shared.deviceType == .pad ? 40 : 24)
+                                        TextBg(text: "Games", textSize: DeviceInfo.shared.deviceType == .pad ? 48 : 24)
                                     }
                                     
                                     Button {
                                         showInfo = true
                                     } label: {
-                                        TextBg(text: "Info", textSize: DeviceInfo.shared.deviceType == .pad ? 40 : 24)
+                                        TextBg(text: "Info", textSize: DeviceInfo.shared.deviceType == .pad ? 48 : 24)
                                     }
                                     
                                     Button {
                                         showSettings = true
                                     } label: {
-                                        TextBg(text: "Settings", textSize: DeviceInfo.shared.deviceType == .pad ? 40 : 24)
+                                        TextBg(text: "Settings", textSize: DeviceInfo.shared.deviceType == .pad ? 48 : 24)
                                     }
                                     
                                     
@@ -66,23 +66,23 @@ struct MainView: View {
                                     .scaledToFit()
                             }.ignoresSafeArea(edges: [.horizontal, .bottom])
                         VStack {
-                            VStack(spacing: 15) {
+                            VStack(spacing: DeviceInfo.shared.deviceType == .pad ? 30:15) {
                                 Image(.logo)
                                     .resizable()
                                     .scaledToFit()
-                                    .frame(height: 100)
+                                    .frame(height: DeviceInfo.shared.deviceType == .pad ? 200:100)
                                 
                                 Button {
                                     showGames = true
                                 } label: {
-                                    TextBg(text: "Games", textSize: DeviceInfo.shared.deviceType == .pad ? 40 : 24)
+                                    TextBg(text: "Games", textSize: DeviceInfo.shared.deviceType == .pad ? 48 : 24)
                                 }
                                 
                                 
                                 Button {
                                     showInfo = true
                                 } label: {
-                                    TextBg(text: "Info", textSize: DeviceInfo.shared.deviceType == .pad ? 40 : 24)
+                                    TextBg(text: "Info", textSize: DeviceInfo.shared.deviceType == .pad ? 48 : 24)
                                 }
                                 
                                 
@@ -90,12 +90,12 @@ struct MainView: View {
                                 Button {
                                     showSettings = true
                                 } label: {
-                                    TextBg(text: "Settings", textSize: DeviceInfo.shared.deviceType == .pad ? 40 : 24)
+                                    TextBg(text: "Settings", textSize: DeviceInfo.shared.deviceType == .pad ? 48 : 24)
                                 }
                                 
-                                if DeviceInfo.shared.deviceType == .pad {
-                                    Spacer()
-                                }
+//                                if DeviceInfo.shared.deviceType == .pad {
+//                                    Spacer()
+//                                }
                             }
                             
                         }
@@ -118,18 +118,18 @@ struct MainView: View {
                     .scaledToFill()
                 
             )
-//            .onAppear {
-//                if settingsVM.musicEnabled {
-//                    MusicPlayer.shared.playBackgroundMusic()
-//                }
-//            }
-//            .onChange(of: settingsVM.musicEnabled) { enabled in
-//                if enabled {
-//                    MusicPlayer.shared.playBackgroundMusic()
-//                } else {
-//                    MusicPlayer.shared.stopBackgroundMusic()
-//                }
-//            }
+            .onAppear {
+                if settingsVM.musicEnabled {
+                    SongsManager.shared.playBackgroundMusic()
+                }
+            }
+            .onChange(of: settingsVM.musicEnabled) { enabled in
+                if enabled {
+                    SongsManager.shared.playBackgroundMusic()
+                } else {
+                    SongsManager.shared.stopBackgroundMusic()
+                }
+            }
             .fullScreenCover(isPresented: $showGames) {
                 GamesView(settingsVM: settingsVM)
             }

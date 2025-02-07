@@ -18,19 +18,19 @@ struct GamesView: View {
                         .scaledToFit()
                 }.ignoresSafeArea(edges: [.horizontal, .bottom])
                 VStack {
-                    VStack(spacing: 15) {
+                    VStack(spacing: DeviceInfo.shared.deviceType == .pad ? 30:15) {
                         
                         Button {
                             showGame1 = true
                         } label: {
-                            TextBg(text: "Memory Kiss", textSize: DeviceInfo.shared.deviceType == .pad ? 40 : 24)
+                            TextBg(text: "Memory Kiss", textSize: DeviceInfo.shared.deviceType == .pad ? 48 : 24)
                         }
                         
                         
                         Button {
                             showGame2 = true
                         } label: {
-                            TextBg(text: "Kiss SLide", textSize: DeviceInfo.shared.deviceType == .pad ? 40 : 24)
+                            TextBg(text: "Kiss SLide", textSize: DeviceInfo.shared.deviceType == .pad ? 48 : 24)
                         }
                         
                         
@@ -38,12 +38,12 @@ struct GamesView: View {
                         Button {
                             showGame3 = true
                         } label: {
-                            TextBg(text: "Love cube", textSize: DeviceInfo.shared.deviceType == .pad ? 40 : 24)
+                            TextBg(text: "Love cube", textSize: DeviceInfo.shared.deviceType == .pad ? 48 : 24)
                         }
                         
-                        if DeviceInfo.shared.deviceType == .pad {
-                            Spacer()
-                        }
+//                        if DeviceInfo.shared.deviceType == .pad {
+//                            Spacer()
+//                        }
                     }
                     
                 }
@@ -91,6 +91,7 @@ struct GamesView: View {
             KissSliderView()
         }
         .fullScreenCover(isPresented: $showGame3) {
+            LoveCube()
         }
     }
 }

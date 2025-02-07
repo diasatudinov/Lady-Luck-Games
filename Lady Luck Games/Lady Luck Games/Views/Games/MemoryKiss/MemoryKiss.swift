@@ -1,4 +1,5 @@
 import SwiftUI
+import AVFoundation
 
 struct MemoryKiss: View {
     @ObservedObject var settingsVM: SettingsViewModel
@@ -12,7 +13,7 @@ struct MemoryKiss: View {
     private let gridSize = 4
     
     @State private var counter: Int = 0
-    
+    @State private var audioPlayer: AVAudioPlayer?
     @Environment(\.presentationMode) var presentationMode
     var body: some View {
         ZStack {
@@ -26,13 +27,13 @@ struct MemoryKiss: View {
                 }
                 VStack {
                     
-                    LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: gridSize), spacing: 10) {
+                    LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: gridSize), spacing: DeviceInfo.shared.deviceType == .pad ? 20:10) {
                         ForEach(cards) { card in
                             CardView(card: card)
                                 .onTapGesture {
                                     flipCard(card)
                                     if settingsVM.soundEnabled {
-                                        // playSound(named: "flipcard")
+                                         playSound(named: "llgFlip")
                                     }
                                 }
                                 .opacity(card.isMatched ? 0.5 : 1.0)
@@ -42,7 +43,7 @@ struct MemoryKiss: View {
                     .frame(width: DeviceInfo.shared.deviceType == .pad ? 900:460)
                     
                 }
-                .padding(14)
+                .padding(DeviceInfo.shared.deviceType == .pad ? 28:14)
                 .background(
                     Color.mainRed
                 )
@@ -95,8 +96,8 @@ struct MemoryKiss: View {
                                 .font(.custom(Fonts.regular.rawValue, size: DeviceInfo.shared.deviceType == .pad ? 64:32))
                                 .foregroundStyle(.yellow)
                                 .textCase(.uppercase)
-                                .padding(.vertical, 14)
-                                .padding(.horizontal, 80)
+                                .padding(.vertical, DeviceInfo.shared.deviceType == .pad ? 28:14)
+                                .padding(.horizontal, DeviceInfo.shared.deviceType == .pad ? 160:80)
                                 .background(
                                     Color.mainRed
                                 )
@@ -114,8 +115,8 @@ struct MemoryKiss: View {
                                 .font(.custom(Fonts.regular.rawValue, size: DeviceInfo.shared.deviceType == .pad ? 64:32))
                                 .foregroundStyle(.yellow)
                                 .textCase(.uppercase)
-                                .padding(.vertical, 14)
-                                .padding(.horizontal, 80)
+                                .padding(.vertical, DeviceInfo.shared.deviceType == .pad ? 28:14)
+                                .padding(.horizontal, DeviceInfo.shared.deviceType == .pad ? 160:80)
                                 .background(
                                     Color.mainRed
                                 )
@@ -126,7 +127,7 @@ struct MemoryKiss: View {
                                 )
                         }
                     }
-                    .padding(20)
+                    .padding(DeviceInfo.shared.deviceType == .pad ? 40:20)
                     .background(
                         Color.loaderBg
                     )
@@ -166,8 +167,8 @@ struct MemoryKiss: View {
                                     .font(.custom(Fonts.regular.rawValue, size: DeviceInfo.shared.deviceType == .pad ? 64:32))
                                     .foregroundStyle(.yellow)
                                     .textCase(.uppercase)
-                                    .padding(.vertical, 14)
-                                    .padding(.horizontal, 80)
+                                    .padding(.vertical, DeviceInfo.shared.deviceType == .pad ? 28:14)
+                                    .padding(.horizontal, DeviceInfo.shared.deviceType == .pad ? 160:80)
                                     .background(
                                         Color.mainRed
                                     )
@@ -185,8 +186,8 @@ struct MemoryKiss: View {
                                     .font(.custom(Fonts.regular.rawValue, size: DeviceInfo.shared.deviceType == .pad ? 64:32))
                                     .foregroundStyle(.yellow)
                                     .textCase(.uppercase)
-                                    .padding(.vertical, 14)
-                                    .padding(.horizontal, 80)
+                                    .padding(.vertical, DeviceInfo.shared.deviceType == .pad ? 28:14)
+                                    .padding(.horizontal, DeviceInfo.shared.deviceType == .pad ? 160:80)
                                     .background(
                                         Color.mainRed
                                     )
@@ -197,7 +198,7 @@ struct MemoryKiss: View {
                                     )
                             }
                         }
-                        .padding(20)
+                        .padding(DeviceInfo.shared.deviceType == .pad ? 40:20)
                         .background(
                             Color.loaderBg
                         )
@@ -323,16 +324,16 @@ struct MemoryKiss: View {
         selectedCards.removeAll()
     }
     
-    //    func playSound(named soundName: String) {
-    //        if let url = Bundle.main.url(forResource: soundName, withExtension: "mp3") {
-    //            do {
-    //                audioPlayer = try AVAudioPlayer(contentsOf: url)
-    //                audioPlayer?.play()
-    //            } catch {
-    //                print("Error playing sound: \(error.localizedDescription)")
-    //            }
-    //        }
-    //    }
+    func playSound(named soundName: String) {
+        if let url = Bundle.main.url(forResource: soundName, withExtension: "mp3") {
+            do {
+                audioPlayer = try AVAudioPlayer(contentsOf: url)
+                audioPlayer?.play()
+            } catch {
+                print("Error playing sound: \(error.localizedDescription)")
+            }
+        }
+    }
 }
 
 #Preview {

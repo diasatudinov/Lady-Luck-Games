@@ -105,8 +105,8 @@ struct InfoView: View {
                                 .font(.custom(Fonts.regular.rawValue, size: DeviceInfo.shared.deviceType == .pad ? 40:20))
                                 .foregroundStyle(.yellow)
                                 .textCase(.uppercase)
-                                .padding(.vertical, 8)
-                                .padding(.horizontal, 20)
+                                .padding(.vertical, DeviceInfo.shared.deviceType == .pad ? 16:8)
+                                .padding(.horizontal, DeviceInfo.shared.deviceType == .pad ? 40:20)
                                 .background(
                                     Color.loaderBg
                                 )
@@ -130,8 +130,8 @@ struct InfoView: View {
                                 .font(.custom(Fonts.regular.rawValue, size: DeviceInfo.shared.deviceType == .pad ? 40:20))
                                 .foregroundStyle(.yellow)
                                 .textCase(.uppercase)
-                                .padding(.vertical, 8)
-                                .padding(.horizontal, 20)
+                                .padding(.vertical, DeviceInfo.shared.deviceType == .pad ? 16:8)
+                                .padding(.horizontal,DeviceInfo.shared.deviceType == .pad ? 40: 20)
                                 .background(
                                     Color.loaderBg
                                 )
@@ -146,15 +146,7 @@ struct InfoView: View {
             }.padding(.vertical, DeviceInfo.shared.deviceType == .pad ? 40:20)
                 .padding(.horizontal, DeviceInfo.shared.deviceType == .pad ? 16:8)
             .background(
-                LinearGradient(
-                    gradient: Gradient(colors: [
-                        Color(red: 83/255, green: 11/255, blue: 11/255),
-                        Color(red: 137/255, green: 20/255, blue: 10/255),
-                        Color(red: 83/255, green: 11/255, blue: 11/255)
-                    ]),
-                    startPoint: .leading,
-                    endPoint: .trailing
-                )
+                Color.mainRed
             )
             .cornerRadius(10)
             .overlay(

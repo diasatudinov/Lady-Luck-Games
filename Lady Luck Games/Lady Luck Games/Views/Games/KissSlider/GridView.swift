@@ -10,11 +10,11 @@ struct GridView: View {
                 HStack(spacing: 0) {
                     ForEach(0..<gridSize, id: \.self) { y in
                         Rectangle()
-                            .stroke(Color.yellow, lineWidth: 2)
+                            .stroke(Color.yellow, lineWidth: DeviceInfo.shared.deviceType == .pad ? 4:2)
                             .frame(width: cellSize, height: cellSize)
                             .background(
                                 
-                                (x + y) % 2 == 0 ?  Color.boardColor1 : .boardColor2
+                                (x + y) % 2 == 0 ? .boardColor1 : .boardColor2
                                 
                             )
                             .shadow(radius: x == 2 && y == 5 ? 4: 0, x: x == 2 && y == 5 ? 10: 0)
